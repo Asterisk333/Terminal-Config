@@ -8,17 +8,17 @@ This is still WIP and will be updated soon
 
 ### File Operations:
 ---
-touch <file>       - Creates a new empty file.
-ff <name>          - Finds files recursively with the specified name.
-unzip <file>       - Extracts a zip file to the current directory.
-sed <file> <find> <replace> 	- Replaces text in a file.
-head <path> [n]    - Displays the first n lines of a file (default 10).
-tail <path> [n]    - Displays the last n lines of a file (default 10).
-nf <name>          - Creates a new file with the specified name.
-mkcd <dir>         - Creates and changes to a new directory.
-copy <src> <dest>  - Copies file or folder to destination
-move <src> <dest>  - Moves file or folder to destination
-rename <path> <name>  - Renames file to name
+touch <file>       - Creates a new empty file.  
+ff <name>          - Finds files recursively with the specified name.  
+unzip <file>       - Extracts a zip file to the current directory.  
+sed <file> <find> <replace> 	- Replaces text in a file.  
+head <path> [n]    - Displays the first n lines of a file (default 10).  
+tail <path> [n]    - Displays the last n lines of a file (default 10).  
+nf <name>          - Creates a new file with the specified name.  
+mkcd <dir>         - Creates and changes to a new directory.  
+copy <src> <dest>  - Copies file or folder to destination.  
+move <src> <dest>  - Moves file or folder to destination.  
+rename <path> <name>  - Renames path to name.  
 
 
 ### Network Utilities:
