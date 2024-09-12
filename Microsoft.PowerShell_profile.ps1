@@ -335,12 +335,12 @@ function flushdns {
 #####Got Stuff#####
 #lazy git commit
 function gcom {
-	git add .
+	git add -A
 	git commit -m "$args"
 }
 #lazy git push
 function gp {
-	git push
+	git push -u origin main
 }
 
 
