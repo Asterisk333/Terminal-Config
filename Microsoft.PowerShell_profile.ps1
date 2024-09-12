@@ -339,7 +339,7 @@ function gcom {
 	git commit -m "$args"
 }
 #lazy git push
-function gp {
+function gpush {
 	git push -u origin main
 }
 
@@ -429,7 +429,7 @@ df                 - Displays information about volumes.
 la                 - Lists all files in the current directory with detailed formatting.
 ll                 - Lists all files, including hidden, in the current directory with detailed formatting.
 gcom <msg>	   - Adds all changes in directory and cpmmits them with message
-gp		   - Pushes to git
+gpush		   - Pushes to git
 
 
 Use 'Show-Help' to display this help message.
