@@ -138,17 +138,37 @@ Load-Profile "profiles" -Quiet
 
 #####Installing Vim,Nano&Git#####
 
-# Install Chocolatey if not installed
-if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+
+
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    Write-Output "winget is not installed. Installing winget..."
+    $AppInstallerUrl = "https://aka.ms/Microsoft.DesktopAppInstaller"
+    $AppxBundlePath = "$env:TEMP\AppInstaller.appxbundle"
+        
+    # Download the App Installer
+    Write-Output "Downloading App Installer from $AppInstallerUrl..."
+    Invoke-WebRequest -Uri $AppInstallerUrl -OutFile $AppxBundlePath
+        
+    # Install the App Installer
+    Write-Output "Installing App Installer..."
+    Add-AppxPackage -Path $AppxBundlePath
+
+    # Verify installation
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        Write-Output "winget has been installed successfully."
+    } else {
+        Write-Output "Failed to install winget."
+    }
+} else {
+        Write-Output "winget is already installed."
 }
+
 
 # Install Vim if not installed
 if (-not (Get-Command vim -ErrorAction SilentlyContinue)) {
     Write-Output "Vim is not installed. Installing Vim..."
-    choco install vim -y
+    winget install --id=Vim.Vim -e
 } else {
     Write-Output "Vim is already installed."
 }
@@ -156,7 +176,7 @@ if (-not (Get-Command vim -ErrorAction SilentlyContinue)) {
 # Install Nano if not installed
 if (-not (Get-Command nano -ErrorAction SilentlyContinue)) {
     Write-Output "Nano is not installed. Installing Nano..."
-    choco install nano -y
+    winget install --id=GNU.nano -e
 } else {
     Write-Output "Nano is already installed."
 }
@@ -164,19 +184,11 @@ if (-not (Get-Command nano -ErrorAction SilentlyContinue)) {
 # Install Git if not installed
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Output "Git is not installed. Installing Git..."
-    choco install git -y
+    winget install --id=Git.Git -e
 } else {
     Write-Output "Git is already installed."
 }
-# Import the Chocolatey Profile that contains the necessary code to enable
-# tab-completions to function for `choco`.
-# Be aware that if you are missing these lines from your profile, tab completion
-# for `choco` will not function.
-# See https://ch0.co/tab-completion for details.
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
+
 
 #####Installing Fonts#####
 ~\Documents\PowerShell\Scripts\InstallFont.ps1
@@ -513,4 +525,5 @@ Use 'Show-Help' to display this help message.
 
 
 Write-Host "Use 'Show-Help' to display help"
+
 
