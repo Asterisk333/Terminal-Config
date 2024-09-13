@@ -4,6 +4,10 @@ This is a repo for me to store my personal commands and Terminal config so I can
 
 This is still WIP and will be updated soon
 
+## Installing:
+
+The Profile installs vim,nano and git via choko
+
 ## Custom comands:
 
 ### File Operations:
@@ -25,7 +29,8 @@ rename `path` `name`  - Renames path to name.
 ---
 Get-PubIP          - Retrieves the public IP address of the machine.  
 winutil            - Runs the WinUtil script from Chris Titus Tech.  
-flushdns           - Clears the DNS cache.
+flushdns           - Clears the DNS cache.  
+Test-Ports `[ports]` `Device`     - Tests wich ports are open in the device. eg. "123,456,678"  
 
 ### System Information:
 ---
@@ -55,8 +60,11 @@ grep `regex` [dir] - Searches for a regex pattern in files within the specified 
 df                 - Displays information about volumes.  
 la                 - Lists all files in the current directory with detailed formatting.  
 ll                 - Lists all files, including hidden, in the current directory with detailed formatting.  
+
+### Git:
+---
 gcom `msg`	       - Adds all changes in directory and cpmmits them with message.  
 gpush		       - Pushes to git User `Origin` Branch `Main`.    
-
+gremote `url`      - Adds a remote repo
 
 Use 'Show-Help' to display this help message.

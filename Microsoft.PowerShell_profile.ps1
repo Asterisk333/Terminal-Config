@@ -136,6 +136,50 @@ if (-not (Get-Module -Name Pwsh-Profile -ListAvailable)) {
 CheckFor-ProfileUpdate | Out-Null
 Load-Profile "profiles" -Quiet
 
+#####Installing Vim,Nano&Git#####
+
+# Install Chocolatey if not installed
+if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+
+# Install Vim if not installed
+if (-not (Get-Command vim -ErrorAction SilentlyContinue)) {
+    Write-Output "Vim is not installed. Installing Vim..."
+    choco install vim -y
+} else {
+    Write-Output "Vim is already installed."
+}
+
+# Install Nano if not installed
+if (-not (Get-Command nano -ErrorAction SilentlyContinue)) {
+    Write-Output "Nano is not installed. Installing Nano..."
+    choco install nano -y
+} else {
+    Write-Output "Nano is already installed."
+}
+
+# Install Git if not installed
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Output "Git is not installed. Installing Git..."
+    choco install git -y
+} else {
+    Write-Output "Git is already installed."
+}
+# Import the Chocolatey Profile that contains the necessary code to enable
+# tab-completions to function for `choco`.
+# Be aware that if you are missing these lines from your profile, tab completion
+# for `choco` will not function.
+# See https://ch0.co/tab-completion for details.
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
+
+
+
 #####################################
 
 function touch($file) { "" | Out-File $file -Encoding ASCII }
@@ -148,6 +192,27 @@ function ff($name) {
 
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
+
+# Function to test if ports are open
+function Test-Ports {
+    param (
+        [string]$ports,
+        [string]$device
+    )
+
+    # Split the ports string into an array
+    $portArray = $ports -split ','
+
+    # Test each port
+    foreach ($port in $portArray) {
+        $result = Test-NetConnection -ComputerName $device -Port $port
+        if ($result.TcpTestSucceeded) {
+            Write-Output "Port $port is open on $device."
+        } else {
+            Write-Output "Port $port is closed on $device."
+        }
+    }
+}
 
 # Open WinUtil
 function winutil {
@@ -332,7 +397,7 @@ function flushdns {
 	Write-Host "DNS has been flushed"
 }
 
-#####Got Stuff#####
+#####Git Stuff#####
 #lazy git commit
 function gcom {
 	git add -A
@@ -342,7 +407,10 @@ function gcom {
 function gpush {
 	git push -u origin main
 }
-
+#lazy remote add
+function gremote {
+	git remote add origin "$args"
+}
 
 #####Personalstuff#####
 function toolbox {
@@ -399,6 +467,7 @@ Network Utilities:
 Get-PubIP          - Retrieves the public IP address of the machine.
 winutil            - Runs the WinUtil script from Chris Titus Tech.
 flushdns           - Clears the DNS cache.
+Test-Ports <ports> <Device>	- Tests wich ports are open in the device. eg. "123,456,678" 
 
 System Information:
 -------------------
@@ -428,8 +497,12 @@ grep <regex> [dir] - Searches for a regex pattern in files within the specified 
 df                 - Displays information about volumes.
 la                 - Lists all files in the current directory with detailed formatting.
 ll                 - Lists all files, including hidden, in the current directory with detailed formatting.
+
+Git:
+----
 gcom <msg>	   - Adds all changes in directory and cpmmits them with message
 gpush		   - Pushes to git
+gremote <url>	   - Adds a remote repo		
 
 
 Use 'Show-Help' to display this help message.
@@ -438,3 +511,4 @@ Use 'Show-Help' to display this help message.
 
 
 Write-Host "Use 'Show-Help' to display help"
+
