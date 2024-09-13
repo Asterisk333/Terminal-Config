@@ -178,6 +178,8 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
+#####Installing Fonts#####
+~\Documents\PowerShell\Scripts\InstallFont.ps1
 
 
 #####################################
