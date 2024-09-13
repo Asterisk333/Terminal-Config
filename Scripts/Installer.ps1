@@ -38,10 +38,18 @@ function Backup-PowerShellProfile {
     )
 
     # Define paths
-    $destinationFolder = "$env:USERPROFILE\Documents\PowerShell"
-    $zipPath = $destinationFolder + "\Terminal-Config.zip"
-    $extractPath = $destinationFolder + "\Terminal-Config"
-    $copyPath = "$env:USERPROFILE\Documents\PowerShell\Terminal-Config\Terminal-Config-main\*"
+    $psVersion = $PSVersionTable.PSVersion.Major
+
+    if($psVersion -le 7){
+	$destinationFolder = "$env:USERPROFILE\Documents\WindowsPowerShell"
+    	$copyPath = "$env:USERPROFILE\Documents\WindowsPowerShell\Terminal-Config\Terminal-Config-main\*"		
+    }else{
+    	$destinationFolder = "$env:USERPROFILE\Documents\PowerShell"
+    	$copyPath = "$env:USERPROFILE\Documents\PowerShell\Terminal-Config\Terminal-Config-main\*"
+    }
+
+    	$zipPath = $destinationFolder + "\Terminal-Config.zip"
+    	$extractPath = $destinationFolder + "\Terminal-Config"
 
     # Create the destination directory if it doesn't exist
     if (-not (Test-Path -Path $destinationFolder)) {
