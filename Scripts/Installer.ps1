@@ -88,4 +88,4 @@ Backup-PowerShellProfile
 $repoUrl = "https://github.com/Asterisk333/Terminal-Config/archive/refs/heads/main.zip"
 Download-AndExtractRepo -RepoUrl $repoUrl
 
-
+Install-Module -Name oh-my-posh -Scope CurrentUser -Force
