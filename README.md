@@ -6,6 +6,10 @@ This is still WIP and will be updated soon
 
 ## Installing:
 
+```pwsh
+iex "& { $(irm 'https://raw.githubusercontent.com/Asterisk333/Terminal-Config/main/Scripts/Installer.ps1') }"
+```
+
 The Profile installs vim,nano and git via choko
 
 ## Custom comands:
