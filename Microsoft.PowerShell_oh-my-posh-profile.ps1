@@ -28,7 +28,7 @@ Function Upgrade-TerminalIcons {
 # See instructions at:
 # https://ohmyposh.dev/docs/installation/linux
 
-. oh-my-posh init pwsh --config "~/.poshthemes/oh-my-posh.json" | Invoke-Expression
+. oh-my-posh init pwsh --config "./oh-my-posh.json" | Invoke-Expression
 
 if ($PSVersionTable.Platform -eq "Win32NT") {
   Import-Module -Name Terminal-Icons
