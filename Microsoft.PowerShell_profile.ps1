@@ -425,6 +425,10 @@ function gpush {
 function gremote {
 	git remote add origin "$args"
 }
+#lazy pull
+function gpull {
+	git pull origin main
+}
 
 #####Personalstuff#####
 function toolbox {
