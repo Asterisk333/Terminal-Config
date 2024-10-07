@@ -204,6 +204,12 @@ function ff($name) {
     }
 }
 
+function fd($name) {
+    Get-ChildItem -Directory -Recurse -Filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
+        Write-Output "$($_.FullName)"
+    }
+}
+
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
 
@@ -469,6 +475,7 @@ File Operations:
 ----------------
 touch <file>       - Creates a new empty file.
 ff <name>          - Finds files recursively with the specified name.
+fd <name>	   - Finds directorys recursively with the specified name.
 unzip <file>       - Extracts a zip file to the current directory.
 sed <file> <find> <replace> 	- Replaces text in a file.
 head <path> [n]    - Displays the first n lines of a file (default 10).
