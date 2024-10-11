@@ -324,20 +324,36 @@ function nf { param($name) New-Item -ItemType "file" -Path . -Name $name }
 # Directory Management
 function mkcd { param($dir) mkdir $dir -Force; Set-Location $dir }
 
-#Copy File or Directory
+#Copy File or Directoryi
 function copy {
-	 param (
+    param (
         [string]$Source,
         [string]$Destination
     )
 
     if (Test-Path $Source) {
-        Copy-Item -Path $Source -Destination $Destination -Recurse
-        Write-Output "Copied $Source to $Destination"
+        if ((Get-Item $Source).PSIsContainer) {
+            # Copy contents of the folder
+            Get-ChildItem -Path $Source -Recurse | ForEach-Object {
+                $destPath = $_.FullName -replace [regex]::Escape($Source), $Destination
+                if ($_.PSIsContainer) {
+                    New-Item -ItemType Directory -Path $destPath -Force
+                } else {
+                    Copy-Item -Path $_.FullName -Destination $destPath -Force
+                }
+            }
+            Write-Output "Copied contents of $Source to $Destination"
+        } else {
+            # Copy single file
+            Copy-Item -Path $Source -Destination $Destination -Recurse
+            Write-Output "Copied $Source to $Destination"
+        }
     } else {
         Write-Output "Source path does not exist."
     }
 }
+
+
 #move file or directory
 function move {
 	 param (

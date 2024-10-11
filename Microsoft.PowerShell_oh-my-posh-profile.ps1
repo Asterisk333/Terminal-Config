@@ -3,7 +3,7 @@
 Function Update-PoshTheme {
 
   $address = "https://raw.githubusercontent.com/springcomp/config-files/master/.poshthemes/oh-my-posh.json"
-  $ROOT="~/.poshthemes/"
+  $ROOT="~\Documents\PowerShell\"
 
   New-Item -Path $ROOT -ItemType Directory -EA SilentlyContinue | Out-Null
   Invoke-RestMethod -Uri $address -OutFile "$($ROOT)oh-my-posh.json"
@@ -28,7 +28,7 @@ Function Upgrade-TerminalIcons {
 # See instructions at:
 # https://ohmyposh.dev/docs/installation/linux
 
-. oh-my-posh init pwsh --config "./oh-my-posh.json" | Invoke-Expression
+. oh-my-posh init pwsh --config "$($ROOT)oh-my-posh.json" | Invoke-Expression
 
 if ($PSVersionTable.Platform -eq "Win32NT") {
   Import-Module -Name Terminal-Icons
